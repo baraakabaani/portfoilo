@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baraa Kabbani — CS (AI) Developer</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg:      '#0F172A',
+            surface: '#1E293B',
+            card:    '#334155',
+            green:   '#22C55E',
+            sky:     '#38BDF8',
+            muted:   '#94A3B8',
+          },
+          fontFamily: {
+            display: ['"Space Grotesk"', 'sans-serif'],
+            body:    ['"DM Sans"',       'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="font-body bg-bg text-white overflow-x-hidden">
+
+  <!-- Custom cursor -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Scroll progress bar -->
+  <div id="scroll-progress"></div>
+
+  <!-- ── NAVBAR ── -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#home" class="font-display font-bold text-xl tracking-tight">
+        <span class="text-green">B</span>araa<span class="text-muted">.</span>
+      </a>
+
+      <ul class="hidden md:flex items-center gap-7">
+        <li><a href="#about"      class="nav-link">About</a></li>
+        <li><a href="#skills"     class="nav-link">Skills</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#projects"   class="nav-link">Projects</a></li>
+        <li><a href="#resume"     class="nav-link">Resume</a></li>
+        <li><a href="#contact"    class="nav-link">Contact</a></li>
+      </ul>
+
+      <a href="cv.pdf" target="_blank" class="hidden md:inline-flex items-center gap-2 border border-green text-green hover:bg-green hover:text-bg font-semibold text-sm px-4 py-2 rounded-lg transition-all duration-200">
+        <i class="fa-solid fa-download text-xs"></i> Resume
+      </a>
+
+      <button id="mobileToggle" class="md:hidden text-white text-xl cursor-pointer" aria-label="Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="fixed inset-0 z-40 bg-bg/98 backdrop-blur-md flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-300">
+    <button id="mobileClose" class="absolute top-6 right-6 text-white text-3xl cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+    <a href="#about"      class="mobile-nav-link">About</a>
+    <a href="#skills"     class="mobile-nav-link">Skills</a>
+    <a href="#experience" class="mobile-nav-link">Experience</a>
+    <a href="#projects"   class="mobile-nav-link">Projects</a>
+    <a href="#resume"     class="mobile-nav-link">Resume</a>
+    <a href="#contact"    class="mobile-nav-link">Contact</a>
+    <a href="cv.pdf" target="_blank" class="mt-4 border border-green text-green px-6 py-3 rounded-lg font-semibold">Download CV</a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section id="home" class="min-h-screen flex items-center relative overflow-hidden">
+    <canvas id="particles" class="absolute inset-0 pointer-events-none" style="z-index:1"></canvas>
+    <div class="hero-grid absolute inset-0 pointer-events-none" style="z-index:1"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="max-w-6xl mx-auto px-6 pt-24 pb-16 relative w-full" style="z-index:2">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+        <div>
+          <div id="hero-tag" class="inline-flex items-center gap-2 bg-green/10 border border-green/30 text-green text-sm font-semibold px-4 py-1.5 rounded-full mb-6">
+            <span class="w-2 h-2 rounded-full bg-green animate-pulse"></span>
+            Open to opportunities · Sharjah, UAE
+          </div>
+
+          <h1 id="hero-name" class="font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-tight mb-4">
+            Baraa<br><span class="text-gradient">Kabbani</span>
+          </h1>
+
+          <div id="hero-role" class="font-display text-xl md:text-2xl text-muted mb-6 font-medium">
+            <span id="typed-role"></span><span class="typed-cursor">|</span>
+          </div>
+
+          <p id="hero-bio" class="text-muted text-base leading-relaxed max-w-lg mb-8">
+            CS (AI) undergraduate at <span class="text-white font-medium">British University in Dubai</span> (2026). Building intelligent systems with <span class="text-green font-medium">RAG / GraphRAG</span>, LLM fine-tuning, full-stack web, and cross-platform mobile.
+          </p>
+
+          <div id="hero-ctas" class="flex flex-wrap gap-4">
+            <a href="#projects" class="btn-primary cursor-pointer">
+              <i class="fa-solid fa-folder-open mr-2"></i>View Projects
+            </a>
+            <a href="#contact" class="btn-ghost cursor-pointer">
+              <i class="fa-solid fa-paper-plane mr-2"></i>Get in Touch
+            </a>
+          </div>
+
+          <div id="hero-social" class="flex items-center gap-4 mt-8">
+            <a href="https://github.com/Baraakabaani" target="_blank" rel="noopener" class="social-pill">
+              <i class="fa-brands fa-github"></i> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/baraa-kabbani-80b1742b2/" target="_blank" rel="noopener" class="social-pill">
+              <i class="fa-brands fa-linkedin"></i> LinkedIn
+            </a>
+            <a href="mailto:Baraaka152@gmail.com" class="social-pill">
+              <i class="fa-solid fa-envelope"></i> Email
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Photo + floating badges -->
+        <div id="hero-photo" class="relative flex justify-center lg:justify-end">
+          <div class="hero-photo-ring">
+            <img src="profile.jpg" alt="Baraa Kabbani" class="hero-photo-img">
+          </div>
+          <div class="float-badge float-badge-1"><i class="fa-brands fa-python mr-1.5"></i>Python</div>
+          <div class="float-badge float-badge-2"><i class="fa-solid fa-robot mr-1.5"></i>RAG / LLM</div>
+          <div class="float-badge float-badge-3"><i class="fa-solid fa-brain mr-1.5"></i>AI / ML</div>
+          <div class="float-badge float-badge-4"><i class="fa-solid fa-mobile-screen mr-1.5"></i>Flutter</div>
+        </div>
+
+      </div>
+    </div>
+
+    <a href="#about" class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-hint cursor-pointer" style="z-index:2" aria-label="Scroll down">
+      <i class="fa-solid fa-chevron-down"></i>
+    </a>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section id="about" class="py-24 relative">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="section-label reveal-up">About Me</div>
+
+      <div class="grid md:grid-cols-2 gap-16 items-center mt-10">
+        <div class="reveal-left">
+          <div class="about-img-wrap">
+            <img src="profile.jpg" alt="Baraa Kabbani" class="about-img">
+            <div class="about-img-border"></div>
+          </div>
+        </div>
+
+        <div class="reveal-right space-y-5">
+          <h2 class="font-display text-4xl font-bold">
+            AI-Focused <span class="text-green">Developer</span><br>&amp; LLM Engineer
+          </h2>
+          <p class="text-muted leading-relaxed">
+            I'm a final-year <strong class="text-white">BSc Computer Science (AI)</strong> student at the British University in Dubai, graduating in 2026. My work spans LLM systems (RAG, GraphRAG, fine-tuning), applied ML, data visualization, and full-stack &amp; mobile development.
+          </p>
+          <p class="text-muted leading-relaxed">
+            I completed a <strong class="text-white">16-week Software Development internship</strong> at Lumiver Tech and freelance as a web developer building React and Node.js applications. I represent BUID at the <strong class="text-white">KU Musabaqat VI</strong> mathematics competition.
+          </p>
+
+          <div class="grid grid-cols-2 gap-4 pt-2">
+            <div class="about-stat">
+              <p class="text-3xl font-display font-bold text-green counter-val" data-target="4" data-suffix="+">0</p>
+              <p class="text-muted text-sm">Years Coding</p>
+            </div>
+            <div class="about-stat">
+              <p class="text-3xl font-display font-bold text-green counter-val" data-target="7" data-suffix="+">0</p>
+              <p class="text-muted text-sm">Projects Built</p>
+            </div>
+            <div class="about-stat">
+              <p class="text-3xl font-display font-bold text-green counter-val" data-target="2">0</p>
+              <p class="text-muted text-sm">Internship Roles</p>
+            </div>
+            <div class="about-stat">
+              <p class="text-3xl font-display font-bold text-green" id="acc-stat">0%</p>
+              <p class="text-muted text-sm">Model Accuracy (ViT)</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-3 pt-2">
+            <div class="info-pill"><i class="fa-solid fa-location-dot text-green mr-2"></i>Al Majaz 1, Sharjah, UAE</div>
+            <div class="info-pill"><i class="fa-solid fa-graduation-cap text-green mr-2"></i>BUID, 2022–2026</div>
+            <div class="info-pill"><i class="fa-solid fa-language text-green mr-2"></i>Arabic (Native) · English</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SKILLS ── -->
+  <section id="skills" class="py-24 bg-surface/30">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="section-label reveal-up">Technical Skills</div>
+      <h2 class="font-display text-4xl font-bold mt-4 mb-12 reveal-up">My <span class="text-green">Stack</span></h2>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="skill-category reveal-up" style="--delay:0s">
+          <div class="skill-cat-header">
+            <i class="fa-solid fa-code text-green"></i>
+            <h3>Languages</h3>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-pill">Python</span>
+            <span class="skill-pill">JavaScript</span>
+            <span class="skill-pill">Java</span>
+            <span class="skill-pill">C++</span>
+            <span class="skill-pill">Dart</span>
+            <span class="skill-pill">SQL</span>
+            <span class="skill-pill">HTML</span>
+            <span class="skill-pill">CSS</span>
+          </div>
+        </div>
+
+        <div class="skill-category reveal-up" style="--delay:0.1s">
+          <div class="skill-cat-header">
+            <i class="fa-solid fa-brain text-purple-400"></i>
+            <h3>AI / ML &amp; LLMs</h3>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-pill purple">RAG / GraphRAG</span>
+            <span class="skill-pill purple">LLM Fine-tuning</span>
+            <span class="skill-pill purple">QLoRA / PEFT</span>
+            <span class="skill-pill purple">Hugging Face</span>
+            <span class="skill-pill purple">PyTorch</span>
+            <span class="skill-pill purple">scikit-learn</span>
+            <span class="skill-pill purple">XGBoost</span>
+            <span class="skill-pill purple">ViT</span>
+            <span class="skill-pill purple">spaCy</span>
+            <span class="skill-pill purple">EasyOCR</span>
+            <span class="skill-pill purple">Grad-CAM</span>
+            <span class="skill-pill purple">OpenCV</span>
+          </div>
+        </div>
+
+        <div class="skill-category reveal-up" style="--delay:0.2s">
+          <div class="skill-cat-header">
+            <i class="fa-brands fa-react text-sky"></i>
+            <h3>Web &amp; Mobile</h3>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-pill sky">React</span>
+            <span class="skill-pill sky">Node.js</span>
+            <span class="skill-pill sky">Express.js</span>
+            <span class="skill-pill sky">FastAPI</span>
+            <span class="skill-pill sky">REST APIs</span>
+            <span class="skill-pill sky">Flutter</span>
+            <span class="skill-pill sky">Android (Kotlin)</span>
+          </div>
+        </div>
+
+        <div class="skill-category reveal-up" style="--delay:0.3s">
+          <div class="skill-cat-header">
+            <i class="fa-solid fa-database text-orange-400"></i>
+            <h3>Data &amp; Databases</h3>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-pill orange">Qdrant</span>
+            <span class="skill-pill orange">Neo4j</span>
+            <span class="skill-pill orange">MongoDB</span>
+            <span class="skill-pill orange">Firebase Firestore</span>
+            <span class="skill-pill orange">Tableau</span>
+            <span class="skill-pill orange">Python Dashboards</span>
+          </div>
+        </div>
+
+        <div class="skill-category reveal-up" style="--delay:0.4s">
+          <div class="skill-cat-header">
+            <i class="fa-solid fa-screwdriver-wrench text-yellow-400"></i>
+            <h3>Tools &amp; DevOps</h3>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-pill yellow">Git / GitHub</span>
+            <span class="skill-pill yellow">Docker Compose</span>
+            <span class="skill-pill yellow">Groq API</span>
+            <span class="skill-pill yellow">Goertzel DSP</span>
+          </div>
+        </div>
+
+        <div class="skill-category reveal-up" style="--delay:0.5s">
+          <div class="skill-cat-header">
+            <i class="fa-solid fa-certificate text-green"></i>
+            <h3>Currently</h3>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-pill">Final Year Project</span>
+            <span class="skill-pill">LLM Systems</span>
+            <span class="skill-pill">Freelancing</span>
+            <span class="skill-pill">Open to Work</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EXPERIENCE ── -->
+  <section id="experience" class="py-24">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="section-label reveal-up">Career</div>
+      <h2 class="font-display text-4xl font-bold mt-4 mb-16 reveal-up">Work <span class="text-green">Experience</span></h2>
+
+      <div class="timeline">
+
+        <div class="timeline-item reveal-up" style="--delay:0s">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="flex flex-wrap items-start justify-between gap-2 mb-3">
+              <div>
+                <h3 class="font-display font-bold text-xl text-white">Software Development Intern</h3>
+                <p class="text-green font-semibold text-sm mt-0.5">Lumiver Tech</p>
+              </div>
+              <span class="timeline-badge">16-Week Internship</span>
+            </div>
+            <ul class="space-y-2 text-muted text-sm">
+              <li class="flex gap-2"><span class="text-green mt-1">▸</span>Contributed to development, debugging and performance optimisation of web applications in a professional team</li>
+              <li class="flex gap-2"><span class="text-green mt-1">▸</span>Applied Git workflows across the full software development lifecycle, including client-facing deliverables</li>
+            </ul>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="tech-tag">Git</span><span class="tech-tag">Web Dev</span><span class="tech-tag">Team Collaboration</span><span class="tech-tag">SDLC</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal-up" style="--delay:0.15s">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="flex flex-wrap items-start justify-between gap-2 mb-3">
+              <div>
+                <h3 class="font-display font-bold text-xl text-white">Freelance Web Developer</h3>
+                <p class="text-green font-semibold text-sm mt-0.5">Self-Employed</p>
+              </div>
+              <span class="timeline-badge">2024 – Present</span>
+            </div>
+            <ul class="space-y-2 text-muted text-sm">
+              <li class="flex gap-2"><span class="text-green mt-1">▸</span>Designed and built responsive web apps for clients using React, Node.js and Express.js</li>
+              <li class="flex gap-2"><span class="text-green mt-1">▸</span>Gathered requirements, delivered functional solutions and optimised performance</li>
+            </ul>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="tech-tag">React</span><span class="tech-tag">Node.js</span><span class="tech-tag">Express.js</span><span class="tech-tag">REST APIs</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EDUCATION ── -->
+  <section class="py-16 bg-surface/30">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="section-label reveal-up">Education</div>
+
+      <div class="edu-card reveal-up mt-8">
+        <div class="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <h3 class="font-display font-bold text-2xl text-white">BSc Computer Science — Artificial Intelligence</h3>
+            <p class="text-green font-semibold mt-1">British University in Dubai (BUID)</p>
+            <p class="text-muted text-sm mt-1">2022 – 2026</p>
+          </div>
+          <span class="edu-badge">Final Year</span>
+        </div>
+        <div class="mt-5 space-y-2 text-muted text-sm">
+          <div class="flex gap-2"><span class="text-green">▸</span><span><strong class="text-white">Relevant coursework:</strong> NLP Applications, Special Topics in AI (RAG, LLM fine-tuning), Pattern Recognition, Machine Learning, Data Visualization, Vision &amp; Robotics</span></div>
+          <div class="flex gap-2"><span class="text-green">▸</span><span><strong class="text-white">KU Musabaqat VI (2024)</strong> — Khalifa University mathematics competition for top GCC undergraduates</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section id="projects" class="py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="section-label reveal-up">Work</div>
+      <h2 class="font-display text-4xl font-bold mt-4 mb-4 reveal-up">Featured <span class="text-green">Projects</span></h2>
+      <p class="text-muted mb-12 reveal-up">Real-world systems built across AI, web, and mobile.</p>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- 1: Attendance System -->
+        <div class="project-card tilt-card reveal-up" style="--delay:0s">
+          <div class="project-thumb thumb-1">
+            <div class="project-thumb-content">
+              <i class="fa-solid fa-wifi text-5xl text-green/80"></i>
+              <i class="fa-solid fa-fingerprint text-5xl text-sky/80 ml-4"></i>
+            </div>
+            <div class="project-thumb-badge">Capstone</div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">AI Ultrasonic Attendance System</h3>
+            <p class="project-desc">Smart attendance via inaudible ultrasonic chirps (20–21 kHz). On-device XGBoost (200 trees, F1=0.886, AUC=0.969) detects spoofing from 15 sensor features. Firebase Firestore + Android BiometricPrompt.</p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="tech-tag-sm">Flutter/Dart</span><span class="tech-tag-sm">Kotlin</span><span class="tech-tag-sm">XGBoost</span><span class="tech-tag-sm">Firebase</span><span class="tech-tag-sm">Goertzel DSP</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/Baraakabaani" target="_blank" rel="noopener" class="project-link"><i class="fa-brands fa-github mr-1.5"></i>GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2: GraphRAG -->
+        <div class="project-card tilt-card reveal-up" style="--delay:0.1s">
+          <div class="project-thumb thumb-4">
+            <div class="project-thumb-content">
+              <i class="fa-solid fa-diagram-project text-5xl text-purple-400/80"></i>
+              <i class="fa-solid fa-magnifying-glass text-5xl text-sky/80 ml-4"></i>
+            </div>
+            <div class="project-thumb-badge">LLM / RAG</div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">GraphRAG Research Assistant</h3>
+            <p class="project-desc">AI agent combining hybrid retrieval + GraphRAG over 100 papers. MongoDB, Qdrant (vector), Neo4j (knowledge graph), FastAPI — all orchestrated with Docker Compose. Fine-tuned Llama-3.2-1B with QLoRA on Groq-augmented QA data.</p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="tech-tag-sm">Python</span><span class="tech-tag-sm">FastAPI</span><span class="tech-tag-sm">Qdrant</span><span class="tech-tag-sm">Neo4j</span><span class="tech-tag-sm">QLoRA/PEFT</span><span class="tech-tag-sm">Docker</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/Baraakabaani" target="_blank" rel="noopener" class="project-link"><i class="fa-brands fa-github mr-1.5"></i>GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3: Recruiting Platform -->
+        <div class="project-card tilt-card reveal-up" style="--delay:0.2s">
+          <div class="project-thumb thumb-5">
+            <div class="project-thumb-content">
+              <i class="fa-solid fa-users text-5xl text-sky/80"></i>
+              <i class="fa-brands fa-linkedin text-5xl text-blue-400/80 ml-4"></i>
+            </div>
+            <div class="project-thumb-badge">Web App</div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Full-Stack Recruiting Platform</h3>
+            <p class="project-desc">Full-stack job board enabling clients to create openings, manage postings, and showcase candidates. Includes a LinkedIn scraping browser extension that auto-imports candidate profiles, eliminating manual data entry.</p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="tech-tag-sm">JavaScript</span><span class="tech-tag-sm">REST APIs</span><span class="tech-tag-sm">Browser Extension</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/Baraakabaani" target="_blank" rel="noopener" class="project-link"><i class="fa-brands fa-github mr-1.5"></i>GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4: Traffic Signs -->
+        <div class="project-card tilt-card reveal-up" style="--delay:0s">
+          <div class="project-thumb thumb-2">
+            <div class="project-thumb-content">
+              <i class="fa-solid fa-eye text-5xl text-purple-400/80"></i>
+              <i class="fa-solid fa-language text-5xl text-sky/80 ml-4"></i>
+            </div>
+            <div class="project-thumb-badge">CSAI414</div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Bilingual Traffic Sign Recognition</h3>
+            <p class="project-desc">Fine-tuned ViT-Base on 11,994 UAE/Jordan signs (29 classes) — <strong class="text-white">94.82% accuracy</strong> (Precision 95.10%, F1 94.90%). EasyOCR for Arabic/English text extraction. Grad-CAM explainability. Robustness-tested under fog, low-light &amp; occlusion.</p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="tech-tag-sm">Python</span><span class="tech-tag-sm">PyTorch</span><span class="tech-tag-sm">ViT</span><span class="tech-tag-sm">EasyOCR</span><span class="tech-tag-sm">Grad-CAM</span><span class="tech-tag-sm">OpenCV</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/Baraakabaani" target="_blank" rel="noopener" class="project-link"><i class="fa-brands fa-github mr-1.5"></i>GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5: RAG Medical -->
+        <div class="project-card tilt-card reveal-up" style="--delay:0.15s">
+          <div class="project-thumb thumb-6">
+            <div class="project-thumb-content">
+              <i class="fa-solid fa-stethoscope text-5xl text-green/80"></i>
+              <i class="fa-solid fa-database text-5xl text-teal-400/80 ml-4"></i>
+            </div>
+            <div class="project-thumb-badge">NLP / RAG</div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">RAG — Respiratory Knowledge Assistant</h3>
+            <p class="project-desc">End-to-end RAG pipeline answering clinical questions on respiratory infections. Document ingestion, chunking, embedding-based semantic retrieval, and grounded LLM generation to reduce hallucination.</p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="tech-tag-sm">Python</span><span class="tech-tag-sm">Sentence Embeddings</span><span class="tech-tag-sm">Vector DB</span><span class="tech-tag-sm">LLM API</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/Baraakabaani" target="_blank" rel="noopener" class="project-link"><i class="fa-brands fa-github mr-1.5"></i>GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6: K-Means -->
+        <div class="project-card tilt-card reveal-up" style="--delay:0.3s">
+          <div class="project-thumb thumb-7">
+            <div class="project-thumb-content">
+              <i class="fa-solid fa-circle-nodes text-5xl text-pink-400/80"></i>
+              <i class="fa-solid fa-chart-pie text-5xl text-rose-400/80 ml-4"></i>
+            </div>
+            <div class="project-thumb-badge">ML</div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Student Group Formation via K-Means</h3>
+            <p class="project-desc">Balanced team formation clustering students by skills &amp; GPA. k=5 via Elbow Method, StandardScaler + PCA visualization. Evaluated with Silhouette, Davies-Bouldin and Calinski-Harabasz metrics.</p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="tech-tag-sm">Python</span><span class="tech-tag-sm">scikit-learn</span><span class="tech-tag-sm">K-Means</span><span class="tech-tag-sm">PCA</span><span class="tech-tag-sm">pandas</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/Baraakabaani" target="_blank" rel="noopener" class="project-link"><i class="fa-brands fa-github mr-1.5"></i>GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7: Data Viz -->
+        <div class="project-card tilt-card reveal-up" style="--delay:0.45s">
+          <div class="project-thumb thumb-8">
+            <div class="project-thumb-content">
+              <i class="fa-solid fa-chart-bar text-5xl text-yellow-400/80"></i>
+              <i class="fa-solid fa-chart-line text-5xl text-orange-400/80 ml-4"></i>
+            </div>
+            <div class="project-thumb-badge">Data Viz</div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Interactive Data Visualization Dashboards</h3>
+            <p class="project-desc">Tableau dashboards and interactive Python visualizations analyzing hotel and traffic datasets, turning raw data into explorable visual insights for decision-making.</p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="tech-tag-sm">Tableau</span><span class="tech-tag-sm">Python</span><span class="tech-tag-sm">pandas</span><span class="tech-tag-sm">Matplotlib</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/Baraakabaani" target="_blank" rel="noopener" class="project-link"><i class="fa-brands fa-github mr-1.5"></i>GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8: Touravel -->
+        <div class="project-card tilt-card reveal-up" style="--delay:0.6s">
+          <div class="project-thumb thumb-3">
+            <div class="project-thumb-content">
+              <i class="fa-solid fa-earth-americas text-5xl text-green/80"></i>
+              <i class="fa-solid fa-plane text-5xl text-sky/80 ml-4"></i>
+            </div>
+            <div class="project-thumb-badge">Web App</div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">Touravel — Travel Booking Platform</h3>
+            <p class="project-desc">Full travel agency website with a 3-step booking wizard, multi-destination packages, photo gallery with lightbox, scroll animations, and Google Sheets form integration.</p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <span class="tech-tag-sm">HTML</span><span class="tech-tag-sm">Tailwind CSS</span><span class="tech-tag-sm">JavaScript</span><span class="tech-tag-sm">Google Sheets API</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/Baraakabaani" target="_blank" rel="noopener" class="project-link"><i class="fa-brands fa-github mr-1.5"></i>GitHub</a>
+              <a href="../tourval/mid.html" class="project-link"><i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i>Live</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── RESUME ── -->
+  <section id="resume" class="py-24 bg-surface/30">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="section-label reveal-up">CV</div>
+      <h2 class="font-display text-4xl font-bold mt-4 mb-4 reveal-up">My <span class="text-green">Resume</span></h2>
+      <p class="text-muted mb-10 reveal-up">A snapshot of my experience, skills, and projects.</p>
+
+      <div class="resume-card reveal-up">
+
+        <!-- Header -->
+        <div class="resume-header">
+          <h3 class="font-display font-bold text-3xl text-white tracking-tight">BARAA KABBANI</h3>
+          <p class="text-green font-semibold mt-1 text-sm">Computer Science (AI) Undergraduate</p>
+          <div class="flex flex-wrap gap-x-5 gap-y-1.5 mt-4 text-sm text-muted">
+            <span><i class="fa-solid fa-envelope text-green mr-1.5"></i>Baraaka152@gmail.com</span>
+            <span><i class="fa-solid fa-phone text-green mr-1.5"></i>+971 56 722 6128</span>
+            <span><i class="fa-solid fa-location-dot text-green mr-1.5"></i>Al Majaz 1, Sharjah, UAE</span>
+            <a href="https://www.linkedin.com/in/baraa-kabbani-80b1742b2/" target="_blank" rel="noopener" class="text-sky hover:underline"><i class="fa-brands fa-linkedin mr-1.5"></i>LinkedIn</a>
+            <a href="https://github.com/Baraakabaani" target="_blank" rel="noopener" class="text-sky hover:underline"><i class="fa-brands fa-github mr-1.5"></i>GitHub</a>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="resume-section">
+          <h4 class="resume-section-title">Summary</h4>
+          <p class="text-muted text-sm leading-relaxed">CS (AI) undergraduate at the British University in Dubai (2026) with internship experience and strong project work in LLM systems (RAG, GraphRAG, fine-tuning), applied ML, data visualization, and full-stack &amp; mobile development.</p>
+        </div>
+
+        <!-- Education -->
+        <div class="resume-section">
+          <h4 class="resume-section-title">Education</h4>
+          <div class="flex flex-wrap justify-between gap-2">
+            <div>
+              <p class="text-white font-semibold text-sm">BSc Computer Science – Artificial Intelligence</p>
+              <p class="text-green text-sm font-medium">British University in Dubai (BUID)</p>
+            </div>
+            <span class="text-muted text-sm shrink-0">2022 – 2026</span>
+          </div>
+          <ul class="mt-3 space-y-1.5 text-muted text-sm">
+            <li class="flex gap-2"><span class="text-green shrink-0">•</span><span>Relevant coursework: NLP Applications, Special Topics in AI (RAG, LLM fine-tuning), Pattern Recognition, Machine Learning, Data Visualization, Vision &amp; Robotics</span></li>
+            <li class="flex gap-2"><span class="text-green shrink-0">•</span><span>KU Musabaqat VI (2024) — Khalifa University mathematics competition for top GCC undergraduates</span></li>
+          </ul>
+        </div>
+
+        <!-- Work Experience -->
+        <div class="resume-section">
+          <h4 class="resume-section-title">Work Experience</h4>
+          <div class="space-y-5">
+            <div>
+              <div class="flex flex-wrap justify-between gap-2">
+                <p class="text-white font-semibold text-sm">Software Development Intern — Lumiver Tech</p>
+                <span class="text-muted text-sm shrink-0">16-Week Internship</span>
+              </div>
+              <ul class="mt-2 space-y-1 text-muted text-sm">
+                <li class="flex gap-2"><span class="text-green shrink-0">•</span><span>Contributed to development, debugging and performance optimisation of web applications in a professional team, applying Git workflows across the full SDLC including client-facing deliverables</span></li>
+              </ul>
+            </div>
+            <div>
+              <div class="flex flex-wrap justify-between gap-2">
+                <p class="text-white font-semibold text-sm">Freelance Web Developer — Self-Employed</p>
+                <span class="text-muted text-sm shrink-0">2024 – Present</span>
+              </div>
+              <ul class="mt-2 space-y-1 text-muted text-sm">
+                <li class="flex gap-2"><span class="text-green shrink-0">•</span><span>Designed and built responsive web apps for clients using React, Node.js and Express.js — gathering requirements, delivering functional solutions and optimising performance</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Projects -->
+        <div class="resume-section">
+          <h4 class="resume-section-title">Key Projects</h4>
+          <div class="space-y-4">
+            <div>
+              <div class="flex flex-wrap items-baseline gap-2">
+                <p class="text-white font-semibold text-sm">GraphRAG Research Assistant – PDF Paper Retrieval Agent</p>
+              </div>
+              <p class="text-muted text-xs mt-1 leading-relaxed">Hybrid retrieval + GraphRAG over 100 papers. MongoDB, Qdrant, Neo4j (Cypher), FastAPI, Docker Compose. Fine-tuned Llama-3.2-1B with QLoRA/PEFT via Groq API; evaluated with RAG metrics.</p>
+            </div>
+            <div>
+              <p class="text-white font-semibold text-sm">AI-Based Ultrasonic Attendance System <span class="text-green text-xs font-normal">— Capstone</span></p>
+              <p class="text-muted text-xs mt-1 leading-relaxed">XGBoost anti-spoofing (F1=0.886, AUC=0.969) with Goertzel DSP, Flutter/Kotlin, Firebase Firestore, BiometricPrompt.</p>
+            </div>
+            <div>
+              <p class="text-white font-semibold text-sm">Full-Stack Recruiting Platform with LinkedIn Import Extension</p>
+              <p class="text-muted text-xs mt-1 leading-relaxed">Job board with browser extension for automated LinkedIn profile import, cutting manual data entry. Full-stack JavaScript, REST APIs.</p>
+            </div>
+            <div>
+              <p class="text-white font-semibold text-sm">Bilingual Traffic Sign Recognition (ViT + OCR)</p>
+              <p class="text-muted text-xs mt-1 leading-relaxed">ViT-Base, 94.82% accuracy on 29 UAE/Jordan classes. EasyOCR Arabic/English, Grad-CAM, robustness-tested under fog, low-light &amp; occlusion.</p>
+            </div>
+            <div>
+              <p class="text-white font-semibold text-sm">RAG System – Respiratory Infection Knowledge Assistant</p>
+              <p class="text-muted text-xs mt-1 leading-relaxed">End-to-end RAG pipeline with document ingestion, chunking, embedding-based retrieval and grounded LLM generation to reduce hallucination.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technical Skills -->
+        <div class="resume-section">
+          <h4 class="resume-section-title">Technical Skills</h4>
+          <div class="space-y-2 text-sm">
+            <p><span class="text-white font-semibold">Programming:</span> <span class="text-muted">Python, JavaScript, Java, C++, Dart, SQL, HTML, CSS</span></p>
+            <p><span class="text-white font-semibold">AI/ML &amp; LLMs:</span> <span class="text-muted">RAG/GraphRAG, LLM fine-tuning (QLoRA/PEFT), Hugging Face, PyTorch, scikit-learn, XGBoost, ViT, spaCy, EasyOCR</span></p>
+            <p><span class="text-white font-semibold">Data &amp; Visualization:</span> <span class="text-muted">Tableau, interactive Python dashboards, Qdrant, Neo4j, MongoDB, Firebase Firestore</span></p>
+            <p><span class="text-white font-semibold">Web, Mobile &amp; Tools:</span> <span class="text-muted">React, Node.js, Express.js, FastAPI, REST APIs, Flutter, Android (Kotlin), Docker Compose, Git/GitHub</span></p>
+          </div>
+        </div>
+
+        <!-- Soft Skills -->
+        <div class="resume-section" style="border-bottom:none; padding-bottom:28px">
+          <h4 class="resume-section-title">Soft Skills</h4>
+          <div class="flex flex-wrap gap-2">
+            <span class="soft-skill-pill">Team Collaboration</span>
+            <span class="soft-skill-pill">Problem-Solving &amp; Debugging</span>
+            <span class="soft-skill-pill">Client Communication</span>
+            <span class="soft-skill-pill">Time Management</span>
+            <span class="soft-skill-pill">Adaptability &amp; Fast Learning</span>
+            <span class="soft-skill-pill">Bilingual: Arabic &amp; English</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="flex justify-center mt-8 reveal-up">
+        <a href="cv.pdf" target="_blank" class="btn-primary cursor-pointer">
+          <i class="fa-solid fa-download mr-2"></i>Download Full PDF Resume
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact" class="py-24">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="section-label reveal-up">Let's Talk</div>
+      <h2 class="font-display text-4xl font-bold mt-4 mb-4 reveal-up">Get In <span class="text-green">Touch</span></h2>
+
+      <!-- Open for work badge -->
+      <div class="reveal-up mt-6 mb-10">
+        <div class="inline-flex items-center gap-3 bg-green/10 border border-green/30 rounded-2xl px-6 py-4">
+          <span class="relative flex h-3 w-3">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-green"></span>
+          </span>
+          <span class="text-green font-semibold text-sm tracking-wide">Available for Work — Open to internships, graduate roles &amp; freelance projects</span>
+        </div>
+      </div>
+
+      <!-- Contact cards grid -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+
+        <a href="mailto:Baraaka152@gmail.com" class="contact-info-card group cursor-pointer reveal-up" style="--delay:0s">
+          <div class="contact-icon group-hover:bg-green group-hover:text-bg">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div>
+            <p class="text-xs text-muted uppercase tracking-wider mb-0.5">Email</p>
+            <p class="text-white font-medium text-sm">Baraaka152@gmail.com</p>
+          </div>
+        </a>
+
+        <a href="tel:+971567226128" class="contact-info-card group cursor-pointer reveal-up" style="--delay:0.1s">
+          <div class="contact-icon group-hover:bg-green group-hover:text-bg">
+            <i class="fa-solid fa-phone"></i>
+          </div>
+          <div>
+            <p class="text-xs text-muted uppercase tracking-wider mb-0.5">Phone</p>
+            <p class="text-white font-medium text-sm">+971 56 722 6128</p>
+          </div>
+        </a>
+
+        <div class="contact-info-card reveal-up" style="--delay:0.2s">
+          <div class="contact-icon">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <div>
+            <p class="text-xs text-muted uppercase tracking-wider mb-0.5">Location</p>
+            <p class="text-white font-medium text-sm">Al Majaz 1, Sharjah, UAE</p>
+          </div>
+        </div>
+
+        <a href="https://www.linkedin.com/in/baraa-kabbani-80b1742b2/" target="_blank" rel="noopener" class="contact-info-card group cursor-pointer reveal-up" style="--delay:0.3s">
+          <div class="contact-icon group-hover:bg-green group-hover:text-bg">
+            <i class="fa-brands fa-linkedin"></i>
+          </div>
+          <div>
+            <p class="text-xs text-muted uppercase tracking-wider mb-0.5">LinkedIn</p>
+            <p class="text-white font-medium text-sm">baraa-kabbani</p>
+          </div>
+        </a>
+
+        <a href="https://github.com/Baraakabaani" target="_blank" rel="noopener" class="contact-info-card group cursor-pointer reveal-up" style="--delay:0.4s">
+          <div class="contact-icon group-hover:bg-green group-hover:text-bg">
+            <i class="fa-brands fa-github"></i>
+          </div>
+          <div>
+            <p class="text-xs text-muted uppercase tracking-wider mb-0.5">GitHub</p>
+            <p class="text-white font-medium text-sm">Baraakabaani</p>
+          </div>
+        </a>
+
+        <a href="https://api.whatsapp.com/qr/ASZVU2YFNETOG1?autoload=1&app_absent=0" target="_blank" rel="noopener" class="contact-info-card group cursor-pointer reveal-up" style="--delay:0.5s">
+          <div class="contact-icon group-hover:bg-green group-hover:text-bg">
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+          <div>
+            <p class="text-xs text-muted uppercase tracking-wider mb-0.5">WhatsApp</p>
+            <p class="text-white font-medium text-sm">+971 56 722 6128</p>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- CTA buttons -->
+      <div class="flex flex-wrap gap-4 reveal-up" style="--delay:0.3s">
+        <a href="mailto:Baraaka152@gmail.com" class="btn-primary cursor-pointer">
+          <i class="fa-solid fa-envelope mr-2"></i>Send an Email
+        </a>
+        <a href="cv.pdf" target="_blank" class="btn-ghost cursor-pointer">
+          <i class="fa-solid fa-download mr-2"></i>Download CV
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="py-8 border-t border-surface text-center text-muted text-sm">
+    <p class="font-display font-semibold text-white mb-1"><span class="text-green">B</span>araa Kabbani</p>
+    <p>Built with care · © 2026 · Sharjah, UAE</p>
+  </footer>
+
+  <!-- ── SCRIPTS ── -->
+  <script>
+    // ── Custom cursor ──
+    const cursorDot  = document.getElementById('cursor-dot');
+    const cursorRing = document.getElementById('cursor-ring');
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursorDot.style.left = mouseX + 'px';
+      cursorDot.style.top  = mouseY + 'px';
+    });
+
+    (function animRing() {
+      ringX += (mouseX - ringX) * 0.1;
+      ringY += (mouseY - ringY) * 0.1;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top  = ringY + 'px';
+      requestAnimationFrame(animRing);
+    })();
+
+    document.querySelectorAll('a, button, .project-card, .skill-pill, .contact-social, .about-stat').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursorRing.classList.add('active'); cursorDot.classList.add('active'); });
+      el.addEventListener('mouseleave', () => { cursorRing.classList.remove('active'); cursorDot.classList.remove('active'); });
+    });
+
+    // ── Scroll progress bar ──
+    const progressBar = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const st = document.documentElement.scrollTop;
+      const h  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (h > 0) progressBar.style.width = (st / h * 100) + '%';
+    }, { passive: true });
+
+    // ── Particle canvas ──
+    (function initParticles() {
+      const canvas = document.getElementById('particles');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const hero = canvas.parentElement;
+
+      function resize() {
+        canvas.width  = hero.offsetWidth  || window.innerWidth;
+        canvas.height = hero.offsetHeight || window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize, { passive: true });
+
+      const pts = Array.from({ length: 65 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.36,
+        vy: (Math.random() - 0.5) * 0.36,
+        r: Math.random() * 1.3 + 0.4,
+        a: Math.random() * 0.4 + 0.08,
+      }));
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const W = canvas.width, H = canvas.height;
+        pts.forEach((p, i) => {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+          if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(34,197,94,${p.a})`;
+          ctx.fill();
+          for (let j = i + 1; j < pts.length; j++) {
+            const q = pts[j];
+            const d = Math.hypot(p.x - q.x, p.y - q.y);
+            if (d < 110) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(q.x, q.y);
+              ctx.strokeStyle = `rgba(34,197,94,${0.07 * (1 - d / 110)})`;
+              ctx.lineWidth = 0.6;
+              ctx.stroke();
+            }
+          }
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    // ── Scroll reveals via IntersectionObserver (no GSAP needed) ──
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el    = entry.target;
+        const delay = parseFloat(el.style.getPropertyValue('--delay') || '0') * 1000;
+        setTimeout(() => el.classList.add('is-visible'), delay);
+        revealObs.unobserve(el);
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.08 });
+
+    document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right').forEach(el => revealObs.observe(el));
+
+    // ── Counter animation ──
+    function animCounter(el, target, suffix, decimals) {
+      const dur = 1800, t0 = performance.now();
+      (function tick(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        const v = target * (1 - Math.pow(1 - p, 3));
+        el.textContent = decimals ? v.toFixed(decimals) + suffix : Math.floor(v) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = (decimals ? target.toFixed(decimals) : target) + suffix;
+      })(t0);
+    }
+
+    const counterObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        animCounter(el, parseFloat(el.dataset.target), el.dataset.suffix || '', parseInt(el.dataset.decimals || 0));
+        counterObs.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('.counter-val').forEach(el => counterObs.observe(el));
+
+    const accEl  = document.getElementById('acc-stat');
+    const accObs = new IntersectionObserver(entries => {
+      if (!entries[0].isIntersecting) return;
+      animCounter(accEl, 94.8, '%', 1);
+      accObs.unobserve(accEl);
+    }, { threshold: 0.6 });
+    accObs.observe(accEl);
+
+    // ── Card tilt ──
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width  - 0.5;
+        const y = (e.clientY - r.top)  / r.height - 0.5;
+        card.style.transform  = `perspective(700px) rotateX(${y * -7}deg) rotateY(${x * 7}deg) translateY(-6px)`;
+        card.style.transition = 'transform 0.08s';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform  = '';
+        card.style.transition = 'all 0.45s cubic-bezier(0.4,0,0.2,1)';
+      });
+    });
+
+    // ── Typed role ──
+    const roles   = ['CS (AI) Student', 'LLM / RAG Engineer', 'Full-Stack Developer', 'Flutter Developer', 'AI/ML Engineer'];
+    let rIdx = 0, cIdx = 0, del = false;
+    const typedEl = document.getElementById('typed-role');
+    function typeRole() {
+      const cur = roles[rIdx];
+      if (!del) {
+        typedEl.textContent = cur.slice(0, ++cIdx);
+        if (cIdx === cur.length) { del = true; setTimeout(typeRole, 1800); return; }
+      } else {
+        typedEl.textContent = cur.slice(0, --cIdx);
+        if (cIdx === 0) { del = false; rIdx = (rIdx + 1) % roles.length; }
+      }
+      setTimeout(typeRole, del ? 55 : 85);
+    }
+    typeRole();
+
+    // ── GSAP enhancements (optional — skill-pill stagger only) ──
+    try {
+      if (typeof gsap === 'undefined') throw new Error('no gsap');
+      if (typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
+
+      gsap.utils.toArray('.skill-category').forEach(cat => {
+        gsap.from(cat.querySelectorAll('.skill-pill'), {
+          scrollTrigger: { trigger: cat, start: 'top 88%' },
+          opacity: 0, y: 14, scale: 0.85, stagger: 0.05, duration: 0.38, ease: 'back.out(1.5)'
+        });
+      });
+    } catch (_) { /* GSAP unavailable — CSS + IntersectionObserver handles everything */ }
+
+    // ── Navbar scroll ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('nav-solid', window.scrollY > 60);
+    }, { passive: true });
+
+    // ── Mobile menu ──
+    document.getElementById('mobileToggle').addEventListener('click', () => {
+      document.getElementById('mobileMenu').classList.remove('translate-x-full');
+    });
+    document.getElementById('mobileClose').addEventListener('click', () => {
+      document.getElementById('mobileMenu').classList.add('translate-x-full');
+    });
+    document.querySelectorAll('#mobileMenu a').forEach(a => {
+      a.addEventListener('click', () => document.getElementById('mobileMenu').classList.add('translate-x-full'));
+    });
+
+  </script>
+
+</body>
+</html>
